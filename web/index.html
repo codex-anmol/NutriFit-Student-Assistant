@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriFit | Professional Nutrition Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-leaf logo-icon"></i>
+                <div>
+                    <h2>NutriFit</h2>
+                    <p>Nutrition Management</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-target="profile-section">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </li>
+                <li data-target="budget-section">
+                    <i class="fa-solid fa-receipt"></i> Meal Plans
+                </li>
+                <li data-target="tracker-section">
+                    <i class="fa-solid fa-list-check"></i> Calorie Log
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <p>NutriFit v2.0</p>
+                <button id="reset-app" class="secondary-btn btn-danger">
+                    <i class="fa-solid fa-trash-can"></i> Reset Data
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Toast Notification Container -->
+            <div id="toast-container"></div>
+            
+            <!-- Profile Section -->
+            <section id="profile-section" class="content-section active-section">
+                <header class="section-header">
+                    <div>
+                        <h1 id="greeting-title">Overview</h1>
+                        <p>Manage your health metrics and daily nutritional goals.</p>
+                    </div>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <form id="profile-form">
+                            <div class="row">
+                                <div class="input-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" placeholder="e.g. John Doe" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group">
+                                    <label for="age">Age</label>
+                                    <input type="number" id="age" placeholder="20" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group">
+                                    <label for="weight">Weight (kg)</label>
+                                    <input type="number" step="0.1" id="weight" placeholder="70.5" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="height">Height (cm)</label>
+                                    <input type="number" step="0.1" id="height" placeholder="175" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="activity">Activity Level</label>
+                                <select id="activity" required>
+                                    <option value="1">Sedentary (Little to no exercise)</option>
+                                    <option value="2">Lightly Active (1-3 days/week)</option>
+                                    <option value="3">Highly Active (6-7 days/week)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="primary-btn">Save Configuration</button>
+                        </form>
+                    </div>
+
+                    <div class="card stats-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-address-card"></i> Current Profile</h3>
+                        </div>
+                        <div id="profile-details" class="profile-details">
+                            <div class="empty-state">
+                                <i class="fa-regular fa-folder-open"></i>
+                                <p>No profile configuration found.</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="profileChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Budget Meals Section -->
+            <section id="budget-section" class="content-section">
+                <header class="section-header">
+                    <div>
+                        <h1>Meal Planning</h1>
+                        <p>Cost-effective nutritional recommendations.</p>
+                    </div>
+                </header>
+                <div class="card budget-card">
+                    <div class="budget-options">
+                        <button class="budget-btn" data-budget="1">
+                            <i class="fa-solid fa-building-columns"></i> Basic Tier
+                            <span>Hostel / Mess</span>
+                        </button>
+                        <button class="budget-btn" data-budget="2">
+                            <i class="fa-solid fa-wallet"></i> Standard Tier
+                            <span>Moderate Budget</span>
+                        </button>
+                        <button class="budget-btn" data-budget="3">
+                            <i class="fa-solid fa-dumbbell"></i> Premium Tier
+                            <span>Athletic Focus</span>
+                        </button>
+                    </div>
+                    <div id="budget-results" class="results-container">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-utensils"></i>
+                            <p>Select a planning tier above to view recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calorie Tracker Section -->
+            <section id="tracker-section" class="content-section">
+                <header class="section-header">
+                    <div>
+                        <h1>Intake Log</h1>
+                        <p>Track your daily macronutrient consumption.</p>
+                    </div>
+                </header>
+                <div class="tracker-grid">
+                    <div class="card add-food-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-plus-circle"></i> Log Entry</h3>
+                        </div>
+                        <form id="food-form">
+                            <div class="input-group">
+                                <label for="food-item">Select Item</label>
+                                <select id="food-item" required>
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="quantity">Servings</label>
+                                <input type="number" id="quantity" min="1" value="1" required>
+                            </div>
+                            <button type="submit" class="primary-btn">Record Entry</button>
+                        </form>
+                    </div>
+
+                    <div class="card daily-report-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-chart-line"></i> Daily Summary</h3>
+                        </div>
+                        <div class="stats-row">
+                            <div class="stat-box">
+                                <h4>Remaining Calories</h4>
+                                <span id="rem-calories" class="highlight-text">0</span>
+                            </div>
+                            <div class="stat-box">
+                                <h4>Total Protein</h4>
+                                <span id="tot-protein" class="highlight-text">0g</span>
+                            </div>
+                        </div>
+                        <div class="food-log">
+                            <div class="log-header">
+                                <h4>Entry History</h4>
+                                <button id="reset-log" class="icon-btn" title="Clear History">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </div>
+                            <ul id="log-list" class="custom-scroll">
+                                <div class="empty-state small">
+                                    <p>No entries recorded today.</p>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
