@@ -142,9 +142,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## ✍️ Author & Contact
 
-**Your Name**  
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+**Anmol Sharma**  
+- GitHub: https://github.com
+- Email: anmolsharmaa88@gmail.com
 
 ---
 *Made with ❤️ for students striving for a healthier lifestyle.*
