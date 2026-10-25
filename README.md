@@ -143,7 +143,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## ✍️ Author & Contact
 
 **Anmol Sharma**  
-- GitHub: https://github.com
+- GitHub: https://github.com/codex-anmol
 - Email: anmolsharmaa88@gmail.com
 
 ---
